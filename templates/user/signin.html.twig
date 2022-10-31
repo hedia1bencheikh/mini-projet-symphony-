@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sign In{% endblock %}
+
+{% block body %}
+
+	<!-- single article section -->
+	<div class="mt-150 mb-150">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-2"></div>
+			    <div class="col-lg-4">
+                    <img src="{{ asset("assets/img/signin-image.jpg") }}" alt="sing up image"></a>
+					<center><p><a href="{{ url("registration") }}" >create an account</a><center>
+                </div>
+				<div class="col-lg-6 mb-5 mb-lg-0">
+                    <div class="form-title">
+                        <br> <h2>Sign in </h2>                
+					</div>
+                    <div id="form_status"></div>
+                    <div class="contact-form">
+						 {% if error %}
+                        	<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    	{% endif %}
+                        <form method="post" action="{{path('login')}}">
+							<p>
+								<label for="email"><i class="fa fa-envelope" aria-hidden="true"></i></label>&nbsp;
+								<input type="email" placeholder="Email" id="email" name="_username" value="{{ username }}">
+							</p>
+							<p>
+								<label for="password"><i class="fas fa-key"></i></label>&nbsp;
+								<input type="password" placeholder="password" name="_password" id="password">
+							</p>
+							<p></p>
+                            <p><input type="submit" value="sign in"></p>
+                        </form>
+                    </div>
+                </div>
+			</div>
+		</div>
+	</div>
+	<!-- end single article section -->
+{% endblock %}

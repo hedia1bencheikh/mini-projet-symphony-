@@ -1,0 +1,100 @@
+{% extends 'base1.html.twig' %}
+{% form_theme form _self %}
+
+
+{% block title %}Mon Espace{% endblock %}
+
+{% block body %}
+
+	<!-- breadcrumb-section -->
+	<div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="breadcrumb-text">
+						{% block text %}<p>Mon compte{% endblock %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end breadcrumb section -->
+	
+    <!-- single product -->
+	<div class="single-product mt-150 mb-150">
+		<div class="container">
+			<div class="row">
+                <div class="col-lg-12 col-md-12">
+                {% for message in app.flashes("_message") %}
+                    <div class="alert alert-success">{{ message }}</div>
+                {% endfor %}
+                </div>
+            </div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="single-product-img">
+					{% if app.user.image is empty %}
+                        <img src="{{ asset('assets/img/voyageurs/user.png') }}" alt="">
+                    {% else %}
+						<img src="{{ asset('assets/img/voyageurs/'~ app.user.image) }}" alt="photo de user"></a>
+					{% endif %}
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="single-product-content">
+						<div class="comment-template">
+						{{form_start(form)}}
+							<h5>Name :</h5><p>{{form_widget(form.name, {"attr": {"value":name}})}}</p>
+							<h5>Pays :</h5><p>{{form_widget(form.pays, {"attr": {"value":pays}})}}</p>
+							<h5>Description :</h5><p>{{form_widget(form.description, {"attr": {"value":description}})}}</p>
+							<p><i class="fab fa-instagram"></i> : {{form_widget(form.instagram, {"attr": {"value":inst}})}}</p>
+							<p><i class="fab fa-facebook-f"></i> : {{form_widget(form.fb, {"attr": {"value":facebook}})}}</p>
+					        <p><i class="fa fa-envelope"></i> :{{form_widget(form.email, {"attr": {"value":email}})}}</p>
+							<h5>saisir (1:compte activé / 0: compte désactivé)</h5><p>{{form_widget(form.state,{"attr": {"value":state}})}}</p>
+							<p>{{form_row(form.photo)}}</p>
+							<p>{{form_widget(form.modifier)}}</p>
+
+						{{form_end(form)}}
+						</div>
+						
+					</div>
+				</div>
+			</div>
+			<br><br>
+            <h4>Les publications de {{app.user.name}} : </h4>
+            {% if publications|length > 1 %}
+                <h5>{{publications|length}} publications</h5>
+            {% else %}
+                <h5>{{publications|length}} publication</h5>
+            {% endif %}  
+			<p><a href="{{url('create_publication')}}">créer une nouvelle publication</a></p>
+            <div class="row">
+			    <div class="col-lg-12 col-md-12">
+				</div>
+                {% for publication in publications %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-latest-news">
+                        <div class="latest-news-bg">
+                            <a href="{{ url("modifier_publication", {"id": publication.id}) }}"><img src="{{ asset('assets/img/publications/' ~ publication.image) }}" alt="{{publication.titre}}"></a>
+                        </div>
+                        <div class="news-text-box">
+                            <h3><a href="{{ url("modifier_publication", {"id": publication.id}) }}">{{publication.titre}}</a></h3>
+                            <p class="blog-meta">
+                                <span class="author"><i class="fas fa-user"></i> Admin</span>
+                                <span class="author"><i class="fas fa-heart"></i> {{publication.likes}}</span>
+                                <span class="author"><i class="fas fa-thumbs-down"></i> {{publication.dislikes}}</span><br>
+                                <span class="date"><i class="fas fa-calendar"></i> {{publication.createdAt  | ago(locale="fr") }}</span>
+                            </p>
+                            
+                            <a href="{{ url("modifier_publication", {"id": publication.id}) }}" class="read-more-btn">read more <i class="fas fa-angle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+			</div>
+		</div>
+	</div>
+	<!-- end single product -->
+	
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}Voyageurs{% endblock %}
+
+{% block body %}
+
+	<!-- breadcrumb-section -->
+	<div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="breadcrumb-text">
+						{% block text %}<p>Nos voyageurs</p>{% endblock %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end breadcrumb section -->
+
+        <!-- team section -->
+    <div class="mt-150">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2 text-center">
+                    <div class="section-title">
+                        <h3>Nos<span class="orange-text">voyageurs</span></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                {% for voyageur in voyageurs %}
+                    <div class="col-lg-4 col-md-6 text-center">
+                        <div class="single-product-item">
+                            <div class="product-image">
+                            {% if voyageur.image is empty %}
+                                <a href="{{ url("voyageur_détatails", {"id": voyageur.id}) }}"><img src="{{ asset('assets/img/voyageurs/user.png') }}" alt=""></a>
+                            {% else %}
+                                <a href="{{ url("voyageur_détatails", {"id": voyageur.id}) }}"><img src="{{ asset('assets/img/voyageurs/' ~ voyageur.image) }}" alt=""></a>
+                            {% endif %}
+                                <h4>{{voyageur.name}}</span></h4>
+                            </div>
+
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- end team section -->
+
+	
+{% endblock %}

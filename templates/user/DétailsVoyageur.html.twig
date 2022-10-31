@@ -1,0 +1,79 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}Détails voyageur{% endblock %}
+
+{% block body %}
+
+	<!-- breadcrumb-section -->
+	<div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="breadcrumb-text">
+						{% block text %}<p>Détails voyageur</p>{% endblock %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end breadcrumb section -->
+	
+    <!-- single product -->
+	<div class="single-product mt-150 mb-150">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-5">
+					<div class="single-product-img">
+						<img src="{{ asset('assets/img/voyageurs/'~ user.image) }}" alt="photo de user"></a>
+					</div>
+				</div>
+				<div class="col-md-7">
+					<div class="single-product-content">
+						<h3><br>{{user.name}}</h3>
+						<p>{{user.description}}</p>
+						<h4>Pays :</h4> <p>{{user.pays}} <p>
+                        <h4>Les réseaux sociaux de {{user.name}} :</h4>
+						<ul class="product-share">
+							<li><a href="{{user.fb}}"><i class="fab fa-facebook-f"></i></a></li>
+							<li><a href="{{user.email}}"><i class="fa fa-envelope"></i></a></li>
+							<li><a href="www.{{user.name}}.com"><i class="fab fa-google-plus-g"></i></a></li>
+							<li><a href="{{user.instagram}}"><i class="fab fa-instagram"></i></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+            <br><br>
+            <h4>Les publications de {{user.name}} : </h4>
+            {% if publications|length > 1 %}
+                <h5>{{publications|length}} publications</h5>
+            {% else %}
+                <h5>{{publications|length}} publication</h5>
+            {% endif %}  
+            <div class="row">
+                {% for publication in publications %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-latest-news">
+                        <div class="latest-news-bg">
+                            <a href="{{ url("show_publication", {"slug": publication.titre | slug("-") | lower, "id": publication.id}) }}"><img src="{{ asset('assets/img/publications/' ~ publication.image) }}" alt="{{publication.titre}}"></a>
+                        </div>
+                        <div class="news-text-box">
+                            <h3><a href="{{ url("show_publication", {"slug": publication.titre | slug("-") | lower, "id": publication.id}) }}">{{publication.titre}}</a></h3>
+                            <p class="blog-meta">
+                                <span class="author"><i class="fas fa-user"></i> Admin</span>
+                                <span class="author"><i class="fas fa-heart"></i> {{publication.likes}}</span>
+                                <span class="author"><i class="fas fa-thumbs-down"></i> {{publication.dislikes}}</span><br>
+                                <span class="date"><i class="fas fa-calendar"></i> {{publication.createdAt  | ago(locale="fr") }}</span>
+                            </p>
+                            
+                            <a href="{{ url("show_publication", {"slug": publication.titre | slug("-") | lower, "id": publication.id}) }}" class="read-more-btn">read more <i class="fas fa-angle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+			</div>
+		</div>
+	</div>
+	<!-- end single product -->
+	
+
+{% endblock %}

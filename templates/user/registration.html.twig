@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block body %}
+
+	<!-- single article section -->
+	<div class="mt-150 mb-150">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-2"></div>
+                <div class="col-lg-4">
+                    <img src="{{ asset("assets/img/signup-image.jpg") }}" alt="sing up image"></a>
+                </div>
+				<div class="col-lg-6 mb-5 mb-lg-0">
+                    <div class="form-title">
+                        <h2>Sign up </h2>                 
+					</div>
+                    <div id="form_status"></div>
+                    <div class="contact-form">
+                        {{form_start(formRegistration)}}
+                            <p>
+								<label for="name"><i class="fas fa-user"></i></label>&nbsp;
+								{{form_widget(formRegistration.name)}}
+								<div class="red">{{form_errors(formRegistration.name)}}</div>
+							</p>
+							<p>
+								<label for="email"><i class="fa fa-envelope" aria-hidden="true"></i></label>&nbsp;
+								{{form_widget(formRegistration.email)}}
+								<div class="red">{{form_errors(formRegistration.email)}}</div>
+							</p>
+							<p>
+								<label for="password"><i class="fas fa-key"></i></label>&nbsp;
+								{{form_widget(formRegistration.password)}}
+								<div class="red">{{form_errors(formRegistration.password)}}</div>
+							</p>
+							<p></p>
+							<p>{{form_widget(formRegistration.register)}}</p>
+                        {{form_end(formRegistration)}}
+                        
+						
+                    </div>
+                </div>
+                
+			</div>
+		</div>
+	</div>
+	<!-- end single article section -->
+{% endblock %}

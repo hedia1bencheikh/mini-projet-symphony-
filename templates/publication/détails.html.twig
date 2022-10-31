@@ -1,0 +1,91 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}Détails Publication{% endblock %}
+
+{% block body %}
+
+	<!-- breadcrumb-section -->
+	<div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="breadcrumb-text">
+						{% block text %}<p>{{publication.titre}}</p>{% endblock %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end breadcrumb section -->
+	
+	
+
+	<!-- single article section -->
+	<div class="mt-150 mb-150">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					{% for message in app.flashes("_message") %}
+                		<div class="alert alert-success">{{ message }}</div>
+                	{% endfor %}
+					<div class="single-artcile-bg">
+						<img src="{{ asset('assets/img/publications/' ~ publication.image) }}" alt="{{publication.titre}}">
+					</div>
+					<div class="single-article-section">
+						<div class="single-article-text">
+							<p class="blog-meta">
+								<span class="author"><i class="fas fa-user"></i> {{user.name}}</span>
+                                <span class="author"><i class="fas fa-heart"></i>{{publication.likes}}</span>
+                                <span class="author"><i class="fas fa-thumbs-down"></i> {{publication.dislikes}}</span>
+                                <span class="date"><i class="fas fa-calendar"></i> {{publication.createdAt  | ago(locale="fr") }}</span>
+							</p>
+							<h2>{{publication.titre}}</h2>
+							<p>{{publication.contenu}}</p>
+							</div>
+
+						<div class="comments-list-wrap">
+							<h3 class="comment-count-title">{{commentaires|length}} {%if commentaires|length >1 %}commentaires{% else %} commentaire {% endif %}</h3>
+							<div class="comment-list">
+								{% for commentaire in commentaires %}
+								<div class="single-comment-body">
+									<div class="comment-user-avater">
+										{% if commentaire.user.image is empty %}
+											<img src="{{ asset('assets/img/voyageurs/user.png') }}" alt="image user">
+										{% else %}
+											<img src="{{ asset('assets/img/voyageurs/' ~ commentaire.user.image) }}" alt="image user">
+										{% endif %}
+									</div>
+									<div class="comment-text-body">
+										<h4>{{commentaire.user.name}}<span class="comment-date">{{commentaire.createdAt  | ago(locale="fr")}}</span> </h4>
+										<p>{{commentaire.contenu}}</p>
+									</div>
+								</div>
+								{% endfor %}
+							</div>
+						</div>
+
+						<div class="comment-template">
+						{% if app.user is empty %}
+							<a href='{{url('login')}}'><h5>connecter-vous pour laisser un commentaire </h5></a>
+						{% else %}
+							<h4>Laisser un commentaire</h4>
+							<p>{{form_help(formCommentaire.contenu)}}</p>
+							{{form_start(formCommentaire)}}
+								<p>{{form_widget(formCommentaire.contenu)}}</p>
+								
+								<p>{{form_widget(formCommentaire.envoyer)}}</p>
+							{{form_end(formCommentaire)}}
+						{% endif %}
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end single article section -->
+
+
+	
+
+{% endblock %}
